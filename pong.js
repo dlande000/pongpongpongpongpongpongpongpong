@@ -10,6 +10,18 @@ class Rect {
         this.pos = new Vect();
         this.size = new Vect(w, h);
     }
+    get left() {
+        return (this.pos.x - this.size.x/2);
+    } 
+    get right() {
+        return (this.pos.x + this.size.x/2);
+    }
+    get top() {
+        return (this.pos.y - this.size.y/2);
+    }
+    get bottom() {
+        return (this.pos.y + this.size.y/2);
+    }
 }
 
 class Ball extends Rect {
@@ -19,40 +31,44 @@ class Ball extends Rect {
     }
 }
 
+class Pong {
+    constructor(canvas) {
+        this._canvas = canvas;
+        this._context = canvas.getContext('2d');
+        this.ball = new Ball();
+        this.ball.pos.x = 100;
+        this.ball.pos.y = 50;
+        this.ball.vel.x = 100;
+        this.ball.vel.y = 100;
+        let lastTime;
+        const callback = ms => {
+            if (lastTime) {
+                this.update((ms = lastTime)/1000);
+            }
+            lastTime = ms;
+            requestAnimationFrame(callback);
+        };
+        callback();
+    }
+    update(changeTime) {
+        this.ball.pos.x += this.ball.vel.x * changeTime;
+        this.ball.pos.y += this.ball.vel.y * changeTime;
+    
+        if (this.ball.left < 0 || this.ball.right > this._canvas.width) {
+            this.ball.vel.x = -1 * this.ball.vel.x;
+        }
+    
+        if (this.ball.top < 0 || this.ball.bottom > this._canvas.height) {
+            this.ball.vel.y = -1 * this.ball.vel.y;
+        }
+    
+        this._context.fillStyle = "#000";
+        this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    
+        this._context.fillStyle = "#fff";
+        this._context.fillRect(this.ball.pos.x, this.ball.pos.y, this.ball.size.x, this.ball.size.y);
+    }
+}
+
 const canvas = document.getElementById('pong');
-const context = canvas.getContext('2d');
-const ball = new Ball();
-ball.pos.x = 100;
-ball.pos.y = 50;
-ball.vel.x = 100;
-ball.vel.y = 100;
-
-let lastTime;
-const callback = ms => {
-    if (lastTime) {
-        update((ms = lastTime)/1000);
-    }
-    lastTime = ms;
-    requestAnimationFrame(callback);
-};
-
-const update = changeTime => {
-    ball.pos.x += ball.vel.x * changeTime;
-    ball.pos.y += ball.vel.y * changeTime;
-
-    if (ball.pos.x < 0 || ball.pos.x > canvas.width) {
-        ball.vel.x = -1 * ball.vel.x;
-    }
-
-    if (ball.pos.y < 0 || ball.pos.y > canvas.height) {
-        ball.vel.y = -1 * ball.vel.y;
-    }
-
-    context.fillStyle = "#000";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    context.fillStyle = "#fff";
-    context.fillRect(ball.pos.x, ball.pos.y, ball.size.x, ball.size.y);
-};
-
-callback();
+const pong = new Pong(canvas);
