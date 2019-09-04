@@ -35,7 +35,7 @@ class Pong {
     constructor(canvas) {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
-        this.ball = new Ball();
+        this.balls = [new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball()];
         this.players = [new Player(), new Player()];
         this.players[0].pos.x = 40;
         this.players[1].pos.x = this._canvas.width - 40;
@@ -51,21 +51,21 @@ class Pong {
             requestAnimationFrame(callback);
         };
         callback();
-        this.reset();
+        this.resetAllBalls();
     }
 
     collide(player, ball) {
         if (player.left < ball.right && player.right > ball.left && player.top < ball.bottom && player.bottom > ball.top) {
             ball.vel.x = -1 * ball.vel.x;
-            this.ball.vel.y *= 1.02;
-            this.ball.vel.x *= 1.02;
+            // this.ball.vel.y *= 1.02;
+            // this.ball.vel.x *= 1.02;
         }
     }
 
     draw() {
         this._context.fillStyle = "#000";
         this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
-        this.drawRect(this.ball);
+        this.balls.forEach(ball => this.drawRect(ball));
         this.players.forEach(player => this.drawRect(player));
     }
 
@@ -74,36 +74,53 @@ class Pong {
         this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
     }
 
-    reset() {
-        this.ball.pos.x = this._canvas.width/2;
-        this.ball.pos.y = this._canvas.height/2;
-        this.ball.vel.x = 0;
-        this.ball.vel.y = 0;
+    resetAllBalls() {
+        this.balls.forEach(ball => {
+            ball.pos.x = this._canvas.width/2;
+            ball.pos.y = this._canvas.height/2;
+            ball.vel.x = 0;
+            ball.vel.y = 0;
+        });
+    }
+
+    resetOneBall(ball) {
+        const i = this.balls.indexOf(ball);
+        this.balls[i].pos.x = this._canvas.width/2;
+        this.balls[i].pos.y = this._canvas.height/2;
+        this.balls[i].vel.x = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.y = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     start() {
-        if (this.ball.vel.x === 0 || this.ball.vel.y === 0) {
-            this.ball.vel.x = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
-            this.ball.vel.y = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
-        }
+        this.balls.forEach(ball => {
+            if (ball.vel.x === 0 || ball.vel.y === 0) {
+                ball.vel.x = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+                ball.vel.y = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+            }
+        });
     }
 
     update(changeTime) {
-        this.ball.pos.x += this.ball.vel.x * changeTime;
-        this.ball.pos.y += this.ball.vel.y * changeTime;
-    
-        if (this.ball.left < 0 || this.ball.right > this._canvas.width) {
-            const playerId = this.ball.vel.x < 0 | 0;
-            this.players[playerId].score++;
-            this.reset();
-        }
-    
-        if (this.ball.top < 0 || this.ball.bottom > this._canvas.height) {
-            this.ball.vel.y = -1 * this.ball.vel.y;
-        }
-        this.players.forEach(player => this.collide(player, this.ball));
+        this.balls.forEach(ball => {
+            ball.pos.x += ball.vel.x * changeTime;
+            ball.pos.y += ball.vel.y * changeTime;
 
-        this.players[1].pos.y = this.ball.pos.y;
+            if (ball.left < 0 || ball.right > this._canvas.width) {
+                const playerId = ball.vel.x < 0 | 0;
+                this.players[playerId].score++;
+                this.resetOneBall(ball);
+            }
+            if (ball.top < 0 || ball.bottom > this._canvas.height) {
+                ball.vel.y = -1 * ball.vel.y;
+            }
+            this.players.forEach(player => {
+                this.collide(player, ball);
+                if (player.score > 20) {
+                    this.resetAllBalls();
+                }
+            });
+        });
+        this.players[1].pos.y = this.balls[0].pos.y;
         this.draw();
     }
 }
