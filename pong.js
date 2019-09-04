@@ -65,7 +65,9 @@ class Pong {
     draw() {
         this._context.fillStyle = "#000";
         this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
-        this.balls.forEach(ball => this.drawRect(ball));
+        this.balls.forEach(ball => {
+            this.drawRect(ball);
+        });
         this.players.forEach(player => this.drawRect(player));
     }
 
@@ -100,6 +102,11 @@ class Pong {
         });
     }
 
+    updateScore() {
+        document.getElementById('p1_score').innerText = this.players[0].score;
+        document.getElementById('p2_score').innerText = this.players[1].score;
+    }
+
     update(changeTime) {
         this.balls.forEach(ball => {
             ball.pos.x += ball.vel.x * changeTime;
@@ -115,12 +122,13 @@ class Pong {
             }
             this.players.forEach(player => {
                 this.collide(player, ball);
-                if (player.score > 20) {
+                if (player.score > 30) {
                     this.resetAllBalls();
                 }
             });
         });
-        this.players[1].pos.y = this.balls[0].pos.y;
+        this.updateScore();
+        this.players[1].pos.y = this.balls[1].pos.y;
         this.draw();
     }
 }
