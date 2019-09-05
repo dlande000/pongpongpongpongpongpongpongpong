@@ -93,7 +93,7 @@ class Pong {
     }
 
     returnRandomSpeed() {
-        return (((Math.random() * 135) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+        return (((Math.random() * 125) + 1)) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     resetOneBall(ball) {
