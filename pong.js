@@ -103,16 +103,16 @@ class Pong {
         const i = this.balls.indexOf(ball);
         this.balls[i].pos.x = this._canvas.width/2;
         this.balls[i].pos.y = this._canvas.height/2;
-        this.balls[i].vel.x = (((Math.random() * 200) + 1)) * (Math.random() > 0.5 ? 1 : -1);
-        this.balls[i].vel.y = (((Math.random() * 200) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.x = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.y = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     start() {
         this.players.forEach(player => player.score = 0);
         this.balls.forEach(ball => {
             if (ball.vel.x === 0 || ball.vel.y === 0) {
-                ball.vel.x = (((Math.random() * 200) + 1)) * (Math.random() > 0.5 ? 1 : -1);
-                ball.vel.y = (((Math.random() * 200) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+                ball.vel.x = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+                ball.vel.y = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
             }
         });
     }
