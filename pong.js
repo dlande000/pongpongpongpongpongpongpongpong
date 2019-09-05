@@ -72,7 +72,7 @@ class Pong {
     }
 
     draw() {
-        this._context.fillStyle = 'rgba(0, 0, 0, 0.08)';
+        this._context.fillStyle = 'rgba(0, 0, 0, 0.07)';
         this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
         this.balls.forEach((ball, i) => this.drawRect(ball, this.colors[i]));
         this.players.forEach(player => this.drawRect(player, "#fff"));
@@ -93,7 +93,7 @@ class Pong {
     }
 
     returnRandomSpeed() {
-        return (((Math.random() * 120) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+        return (((Math.random() * 135) + 1)) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     resetOneBall(ball) {
