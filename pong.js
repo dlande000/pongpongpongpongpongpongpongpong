@@ -107,7 +107,7 @@ class Pong {
     start() {
         this.players.forEach(player => player.score = 0);
         this.balls.forEach(ball => {
-            if (ball.velocity.x === 0 || ball.velocity.y === 0) {
+            if (ball.velocity.x === 0) {
                 ball.velocity.x = this.returnRandomSpeed();
                 ball.velocity.y = this.returnRandomSpeed();
             }
@@ -119,8 +119,17 @@ class Pong {
         document.getElementById('p2_score').innerText = this.players[1].score;
     }
 
+    changeAIPos(ball) {
+        this.players[1].pos.y = (this.players[1].pos.y + ball.pos.y)/2;
+    }
+
     update(changeTime) {
+        let closestBall = this.balls[0];
         this.balls.forEach(ball => {
+            if (ball.pos.x > closestBall.pos.x && ball.velocity.x < closestBall.velocity.x) {
+                closestBall = ball;
+            }
+
             ball.pos.x += ball.velocity.x * changeTime;
             ball.pos.y += ball.velocity.y * changeTime;
 
@@ -140,7 +149,7 @@ class Pong {
             });
         });
         this.updateScore();
-        this.players[1].pos.y = this.balls[1].pos.y;
+        this.changeAIPos(closestBall);
         this.draw();
     }
 }
