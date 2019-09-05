@@ -3,6 +3,12 @@ html {
     background-color: black;
 }
 
+body {
+    width: 700px;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+
 canvas {
     border: 1px solid white; 
 }
@@ -11,20 +17,21 @@ h1, p, a, #p1_score, #p2_score {
     font-family: 'Press Start 2P', cursive;
 }
 
-h1, p {
+p, #p1_score, #p2_score, a {
+    color: white;
+}
+
+h1 {
     background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
     -webkit-background-clip: text;
     color: transparent;
 }
 
-p, #p1_score, #p2_score, a {
-    color: white;
-}
-
-body {
-    width: 700px;
-    margin: 0 auto;
-    padding-top: 10px;
+img {
+    height: 10px;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .centered {
@@ -33,6 +40,15 @@ body {
 
 .relative-pos {
     position: relative;
+}
+
+.headers {
+    font-size: 30px;
+    width: 1000px;
+}
+
+.scores {
+    bottom: 10px;
 }
 
 #header-1 {
@@ -44,17 +60,8 @@ body {
     bottom: 55px;
 }
 
-.headers {
-    font-size: 30px;
-    width: 1000px;
-}
-
 #game {
     margin-top: -75px;
-}
-
-.scores {
-    bottom: 10px;
 }
 
 #score-1 {
@@ -65,11 +72,4 @@ body {
 #score-2 {
     float: right;
     right: 45px;
-}
-
-img {
-    height: 10px;
-    padding: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
 }
