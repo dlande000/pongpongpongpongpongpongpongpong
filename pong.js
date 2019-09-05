@@ -27,7 +27,7 @@ class Rectangle {
 class Ball extends Rectangle {
     constructor() {
         super(10, 10);
-        this.vel = new Vector();
+        this.velocity = new Vector();
     }
 }
 
@@ -51,68 +51,65 @@ class Pong {
             player.pos.y = this._canvas.height/2;
         });
         let lastTime;
-        const callback = ms => {
+        const requestAnimationFrameCallback = milliseconds => {
             if (lastTime) {
-                this.update((ms = lastTime)/1000);
+                this.update((milliseconds = lastTime)/1000);
             }
-            lastTime = ms;
-            requestAnimationFrame(callback);
+            lastTime = milliseconds;
+            requestAnimationFrame(requestAnimationFrameCallback);
         };
-        callback();
+        requestAnimationFrameCallback();
         this.resetAllBalls();
     }
 
     collide(player, ball) {
         if (player.left < ball.right && player.right > ball.left && player.top < ball.bottom && player.bottom > ball.top) {
-            ball.vel.x = -1 * ball.vel.x;
-            const i = this.balls.indexOf(ball);
-            this.balls[i].vel.y *= 1.02;
-            this.balls[i].vel.x *= 1.02;
+            ball.velocity.x = -1 * ball.velocity.x;
+            const ballToChange = this.balls[this.balls.indexOf(ball)];
+            ballToChange.velocity.y *= 1.02;
+            ballToChange.velocity.x *= 1.02;
         }
     }
 
     draw() {
         this._context.fillStyle = 'rgba(0, 0, 0, 0.08)';
         this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
-        this.balls.forEach((ball, i) => {
-            this.drawBall(ball, this.colors[i]);
-        });
-        this.players.forEach(player => this.drawRect(player));
+        this.balls.forEach((ball, i) => this.drawRect(ball, this.colors[i]));
+        this.players.forEach(player => this.drawRect(player, "#fff"));
     }
 
-    drawRect(rect) {
-        this._context.fillStyle = "#fff";
-        this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
-    }
-
-    drawBall(ball, color) {
+    drawRect(rect, color) {
         this._context.fillStyle = color;
-        this._context.fillRect(ball.left, ball.top, ball.size.x, ball.size.y);
+        this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
     }
 
     resetAllBalls() {
         this.balls.forEach(ball => {
             ball.pos.x = this._canvas.width/2;
             ball.pos.y = this._canvas.height/2;
-            ball.vel.x = 0;
-            ball.vel.y = 0;
+            ball.velocity.x = 0;
+            ball.velocity.y = 0;
         });
+    }
+
+    returnRandomSpeed() {
+        return (((Math.random() * 120) + 1)) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     resetOneBall(ball) {
         const i = this.balls.indexOf(ball);
         this.balls[i].pos.x = this._canvas.width/2;
         this.balls[i].pos.y = this._canvas.height/2;
-        this.balls[i].vel.x = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
-        this.balls[i].vel.y = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].velocity.x = this.returnRandomSpeed();
+        this.balls[i].velocity.y = this.returnRandomSpeed();
     }
 
     start() {
         this.players.forEach(player => player.score = 0);
         this.balls.forEach(ball => {
-            if (ball.vel.x === 0 || ball.vel.y === 0) {
-                ball.vel.x = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
-                ball.vel.y = (((Math.random() * 150) + 1)) * (Math.random() > 0.5 ? 1 : -1);
+            if (ball.velocity.x === 0 || ball.velocity.y === 0) {
+                ball.velocity.x = this.returnRandomSpeed();
+                ball.velocity.y = this.returnRandomSpeed();
             }
         });
     }
@@ -124,16 +121,16 @@ class Pong {
 
     update(changeTime) {
         this.balls.forEach(ball => {
-            ball.pos.x += ball.vel.x * changeTime;
-            ball.pos.y += ball.vel.y * changeTime;
+            ball.pos.x += ball.velocity.x * changeTime;
+            ball.pos.y += ball.velocity.y * changeTime;
 
             if (ball.left < 0 || ball.right > this._canvas.width) {
-                const playerId = ball.vel.x < 0 | 0;
+                const playerId = ball.velocity.x < 0 | 0;
                 this.players[playerId].score++;
                 this.resetOneBall(ball);
             }
             if (ball.top < 0 || ball.bottom > this._canvas.height) {
-                ball.vel.y = -1 * ball.vel.y;
+                ball.velocity.y = -1 * ball.velocity.y;
             }
             this.players.forEach(player => {
                 this.collide(player, ball);
