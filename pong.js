@@ -1,14 +1,14 @@
-class Vect {
+class Vector {
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
     }
 }
 
-class Rect {
+class Rectangle {
     constructor(w, h) {
-        this.pos = new Vect();
-        this.size = new Vect(w, h);
+        this.pos = new Vector();
+        this.size = new Vector(w, h);
     }
     get left() {
         return (this.pos.x - this.size.x/2);
@@ -24,10 +24,17 @@ class Rect {
     }
 }
 
-class Ball extends Rect {
+class Ball extends Rectangle {
     constructor() {
         super(10, 10);
-        this.vel = new Vect();
+        this.vel = new Vector();
+    }
+}
+
+class Player extends Rectangle {
+    constructor() {
+        super(20, 100);
+        this.score = 0;
     }
 }
 
@@ -35,6 +42,7 @@ class Pong {
     constructor(canvas) {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
+        this.colors = ["#FF355E", "#FF6037", "#FFFF66", '#66FF66', '#50BFE6', '#FF6EFF', '#FF00CC', "#fff"];
         this.balls = [new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball()];
         this.players = [new Player(), new Player()];
         this.players[0].pos.x = 40;
@@ -57,16 +65,17 @@ class Pong {
     collide(player, ball) {
         if (player.left < ball.right && player.right > ball.left && player.top < ball.bottom && player.bottom > ball.top) {
             ball.vel.x = -1 * ball.vel.x;
-            // this.ball.vel.y *= 1.02;
-            // this.ball.vel.x *= 1.02;
+            const i = this.balls.indexOf(ball);
+            this.balls[i].vel.y *= 1.02;
+            this.balls[i].vel.x *= 1.02;
         }
     }
 
     draw() {
-        this._context.fillStyle = "#000";
+        this._context.fillStyle = 'rgba(0, 0, 0, 0.1)';
         this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
-        this.balls.forEach(ball => {
-            this.drawRect(ball);
+        this.balls.forEach((ball, i) => {
+            this.drawBall(ball, this.colors[i]);
         });
         this.players.forEach(player => this.drawRect(player));
     }
@@ -74,6 +83,11 @@ class Pong {
     drawRect(rect) {
         this._context.fillStyle = "#fff";
         this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
+    }
+
+    drawBall(ball, color) {
+        this._context.fillStyle = color;
+        this._context.fillRect(ball.left, ball.top, ball.size.x, ball.size.y);
     }
 
     resetAllBalls() {
@@ -89,15 +103,15 @@ class Pong {
         const i = this.balls.indexOf(ball);
         this.balls[i].pos.x = this._canvas.width/2;
         this.balls[i].pos.y = this._canvas.height/2;
-        this.balls[i].vel.x = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
-        this.balls[i].vel.y = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.x = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.y = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     start() {
         this.balls.forEach(ball => {
             if (ball.vel.x === 0 || ball.vel.y === 0) {
-                ball.vel.x = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
-                ball.vel.y = ((Math.random() * (400)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+                ball.vel.x = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+                ball.vel.y = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
             }
         });
     }
@@ -130,13 +144,6 @@ class Pong {
         this.updateScore();
         this.players[1].pos.y = this.balls[1].pos.y;
         this.draw();
-    }
-}
-
-class Player extends Rect {
-    constructor() {
-        super(20, 100);
-        this.score = 0;
     }
 }
 
