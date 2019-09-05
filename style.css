@@ -7,12 +7,69 @@ canvas {
     border: 1px solid white; 
 }
 
-h1, p {
-    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
-    color: transparent;
+h1, p, a, #p1_score, #p2_score {
     font-family: 'Press Start 2P', cursive;
 }
 
-p {
+h1, p {
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+p, #p1_score, #p2_score, a {
     color: white;
+}
+
+body {
+    width: 700px;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.relative-pos {
+    position: relative;
+}
+
+#header-1 {
+    right: 200px
+}
+
+#header-2 {
+    right: 100px;
+    bottom: 55px;
+}
+
+.headers {
+    font-size: 30px;
+    width: 1000px;
+}
+
+#game {
+    margin-top: -75px;
+}
+
+.scores {
+    bottom: 10px;
+}
+
+#score-1 {
+    float: left;
+    left: 45px;
+}
+
+#score-2 {
+    float: right;
+    right: 45px;
+}
+
+img {
+    height: 10px;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
 }

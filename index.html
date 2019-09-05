@@ -6,18 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel='icon' href='pixel.jpg' type='image/x-icon'/ >
     <title>PONGPONGPONGPONGPONGPONGPONGPONG</title>
 </head>
 <body>
-    <h1>PONGPONGPONGPONG</h1>
-    <h1>PONGPONGPONGPONG</h1>
-    <p>Use the mouse to control the left paddle. If you let a ball past your paddle, the computer gets a point. The first player to 50 wins.</p>
-    <p>P1 Score:</p>
-    <div id="p1_score"></div>
-    <p>P2 Score:</p>
-    <div id="p2_score"></div>
-    <canvas id="pong" width="600" height="400"></canvas>
-    <script src="pong.js"></script>
-    <p>Game by David Anderson based on the classic Pong.</p>
+    <div class="centered">
+        <div id="header-1" class="relative-pos headers">
+            <h1>PONGPONGPONGPONG</h1>
+        </div>
+        <div id="header-2" class="relative-pos headers">
+            <h1>PONGPONGPONGPONG</h1>
+        </div>
+        <div id="game">
+            <p>Use the mouse to control the left paddle. If you let a ball past your paddle, the computer gets a point. The first player to 50 wins.</p>
+            <p>Click to start.</p>
+            <div id="score-1" class="relative-pos scores">
+            <p>P1 Score:</p>
+            <div id="p1_score"></div>
+            </div>
+            <div id="score-2" class="relative-pos scores">
+            <p>P2 Score:</p>
+            <div id="p2_score"></div>
+            </div>
+            <canvas id="pong" width="600" height="400"></canvas>
+            <script src="pong.js"></script>
+            <p>Game by David Anderson based on the classic Pong.</p>
+            <nav>
+                <a href="">GitHub</a><img src="pixel.jpg" alt="">
+                <a href="">LinkedIn</a><img src="pixel.jpg" alt="">
+                <a href="">Portfolio</a><img src="pixel.jpg" alt="">
+                <a href="">AngelList</a>
+            </nav>
+        </div>
+    </div>
 </body>
 </html>
