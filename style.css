@@ -1,0 +1,13 @@
+html {
+    width: 100%;
+    background-color: black;
+}
+
+canvas {
+    border: 1px solid white; 
+}
+
+h1, p {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+}

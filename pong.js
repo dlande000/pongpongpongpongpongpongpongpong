@@ -42,8 +42,8 @@ class Pong {
     constructor(canvas) {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
-        this.colors = ["#FF355E", "#FF6037", "#FFFF66", '#66FF66', '#50BFE6', '#FF6EFF', '#FF00CC', "#fff"];
-        this.balls = [new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball()];
+        this.colors = ["#FF355E", "#FF6037", "#FFFF66", '#FFCC33', '#66FF66', '#AAF0D1', '#50BFE6', '#FF6EFF', '#FF00CC', "#fff"];
+        this.balls = [new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball(), new Ball()];
         this.players = [new Player(), new Player()];
         this.players[0].pos.x = 40;
         this.players[1].pos.x = this._canvas.width - 40;
@@ -103,15 +103,15 @@ class Pong {
         const i = this.balls.indexOf(ball);
         this.balls[i].pos.x = this._canvas.width/2;
         this.balls[i].pos.y = this._canvas.height/2;
-        this.balls[i].vel.x = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
-        this.balls[i].vel.y = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.x = (((Math.random() * (200)) - 50) + 50) * (Math.random() > 0.5 ? 1 : -1);
+        this.balls[i].vel.y = (((Math.random() * (200)) - 50) + 50) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     start() {
         this.balls.forEach(ball => {
             if (ball.vel.x === 0 || ball.vel.y === 0) {
-                ball.vel.x = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
-                ball.vel.y = ((Math.random() * (300)) - 1) * (Math.random() > 0.5 ? 1 : -1);
+                ball.vel.x = ((Math.random() * (200 - 50) + 50) * (Math.random() > 0.5 ? 1 : -1));
+                ball.vel.y = ((Math.random() * (200 - 50) + 50) * (Math.random() > 0.5 ? 1 : -1));
             }
         });
     }
@@ -136,7 +136,7 @@ class Pong {
             }
             this.players.forEach(player => {
                 this.collide(player, ball);
-                if (player.score > 30) {
+                if (player.score > 50) {
                     this.resetAllBalls();
                 }
             });
