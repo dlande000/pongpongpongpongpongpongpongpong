@@ -93,7 +93,7 @@ class Pong {
     }
 
     returnRandomSpeed() {
-        return Math.round((((Math.random() * 42) + 1)) * (Math.random() > 0.5 ? 1 : -1));
+        return Math.round((((Math.random() * 50) + 1)) * (Math.random() > 0.5 ? 1 : -1));
     }
 
     resetOneBall(ball) {
@@ -141,6 +141,8 @@ class Pong {
         });
         this.updateScore();
         this.players[1].pos.y = this.balls[1].pos.y;
+        console.log(this.balls[0].velocity.x);
+        console.log(this.balls[0].velocity.y);
         this.draw();
     }
 }
