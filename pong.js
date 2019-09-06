@@ -149,8 +149,6 @@ class Pong {
             });
         });
         this.updateScore();
-        console.log(this.balls[0].velocity.x);
-        console.log(this.balls[0].velocity.y);
         this.changeAIPos(closestBall);
         this.draw();
     }
