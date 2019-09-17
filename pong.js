@@ -126,7 +126,7 @@ class Pong {
     update(changeTime) {
         let closestBall = this.balls[0];
         this.balls.forEach(ball => {
-            if (ball.pos.x > closestBall.pos.x && ball.velocity.x < closestBall.velocity.x) {
+            if ((ball.pos.x > closestBall.pos.x && ball.velocity.x < closestBall.velocity.x) || ball.velocity.x > 200 ) {
                 closestBall = ball;
             }
 
