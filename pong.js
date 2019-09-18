@@ -72,7 +72,7 @@ class Pong {
     }
 
     draw() {
-        this._context.fillStyle = 'rgba(0, 0, 0, 0.07)';
+        this._context.fillStyle = 'rgba(0, 0, 0, 0.06)';
         this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
         this.balls.forEach((ball, i) => this.drawRect(ball, this.colors[i]));
         this.players.forEach(player => this.drawRect(player, "#fff"));
@@ -93,7 +93,7 @@ class Pong {
     }
 
     returnRandomSpeed() {
-        return Math.round((((Math.random() * 200) + 50)) * (Math.random() > 0.5 ? 1 : -1));
+        return ((Math.random() * 200) + 50) * (Math.random() > 0.5 ? 1 : -1);
     }
 
     resetOneBall(ball) {
@@ -124,10 +124,10 @@ class Pong {
     }
 
     update(changeTime) {
-        let closestBall = this.balls[0];
+        let chasingBall = this.balls[0];
         this.balls.forEach(ball => {
-            if ((ball.pos.x > closestBall.pos.x && ball.velocity.x < closestBall.velocity.x) || ball.velocity.x > 200 ) {
-                closestBall = ball;
+            if ((ball.velocity.x > 220 && ball.velocity.x < 350) || (ball.pos.x > chasingBall.pos.x && ball.velocity.x < chasingBall.velocity.x)) {
+                chasingBall = ball;
             }
 
             ball.pos.x += ball.velocity.x * changeTime;
@@ -147,9 +147,10 @@ class Pong {
                     this.resetAllBalls();
                 }
             });
-        });
+        });  
+
         this.updateScore();
-        this.changeAIPos(closestBall);
+        this.changeAIPos(chasingBall);
         this.draw();
     }
 }
