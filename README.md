@@ -4,7 +4,7 @@
 
 [PONGPONGPONGPONGPONGPONGPONGPONG Live](https://www.davidanderson.nyc/pongpongpongpongpongpongpongpong)
 
-![screenshot](screenshot.png)
+![screenshot](./assets/images/screenshot.png)
 
 PONGPONGPONGPONGPONGPONGPONGPONG (hereafter PONG^8) is the classic PONG game but with way more PONG. A player and a computer are served 10 balls; the balls are served in different directions and with different speeds. When the player gets a ball past the computer player, the player is awarded a point. The first player to 50 points wins. 
 
