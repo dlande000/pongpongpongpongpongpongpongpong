@@ -1,42 +1,5 @@
-class Vector {
-    constructor(x = 0, y = 0) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-class Rectangle {
-    constructor(w, h) {
-        this.pos = new Vector();
-        this.size = new Vector(w, h);
-    }
-    get left() {
-        return (this.pos.x - this.size.x/2);
-    } 
-    get right() {
-        return (this.pos.x + this.size.x/2);
-    }
-    get top() {
-        return (this.pos.y - this.size.y/2);
-    }
-    get bottom() {
-        return (this.pos.y + this.size.y/2);
-    }
-}
-
-class Ball extends Rectangle {
-    constructor() {
-        super(10, 10);
-        this.velocity = new Vector();
-    }
-}
-
-class Player extends Rectangle {
-    constructor() {
-        super(20, 100);
-        this.score = 0;
-    }
-}
+import Player from './player';
+import Ball from './ball';
 
 class Pong {
     constructor(canvas) {
@@ -155,13 +118,4 @@ class Pong {
     }
 }
 
-const canvas = document.getElementById('pong');
-const pong = new Pong(canvas);
-
-canvas.addEventListener('mousemove', event => {
-    pong.players[0].pos.y = event.offsetY;
-});
-
-canvas.addEventListener('click', event => {
-    pong.start();
-});
+export default Pong;
