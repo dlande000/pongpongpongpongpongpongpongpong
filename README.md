@@ -25,7 +25,7 @@ returnRandomSpeed() {
 ```
 `returnRandomSpeed` is run for both the x velocity and y velocity of each ball; the ternary at the end of the function determines if the ball is served left and/or up (negative) or right and/or down (positive). 
 
-The AI computer player is written to be competitive but not infalliable. The position for the computer player is updated via the function `changeAIPos`:
+The AI computer player is written to be competitive but not infallible. The position for the computer player is updated via the function `changeAIPos`:
 
 ```javascript
 changeAIPos(ball) {
@@ -33,7 +33,7 @@ changeAIPos(ball) {
 }
 ```
 
-The y cordinate of the computer player (`this.players[1]`—the human player and the computer player exist in an array of players) is an average the computer's current y position and the y position of a specified ball. The ball argument is given to the `changeAIPos` function in the `update` function: 
+The y coordinate of the computer player (`this.players[1]`—the human player and the computer player exist in an array of players) is an average the computer's current y position and the y position of a specified ball. The ball argument is given to the `changeAIPos` function in the `update` function: 
 
 ```javascript
 update(changeTime) {
@@ -54,4 +54,4 @@ Each time the `update` function is called, the `balls` array is iterated over. I
 
 ### Artistic credits
 
-PONG^8 was inspired by Pong, originally manufactored by Atari and released in 1972. Page font is [Press Start P2](https://fonts.google.com/specimen/Press+Start+2P). Favicon and pixel icon from [123RF](https://www.123rf.com/photo_85997350_stock-vector-pixel-pattern-vector-seamless-pixel-art-background-with-gray-silver-and-white-squares.html).
+PONG^8 was inspired by Pong, originally manufactured by Atari and released in 1972. Page font is [Press Start P2](https://fonts.google.com/specimen/Press+Start+2P). Favicon and pixel icon from [123RF](https://www.123rf.com/photo_85997350_stock-vector-pixel-pattern-vector-seamless-pixel-art-background-with-gray-silver-and-white-squares.html).
